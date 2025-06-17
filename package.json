@@ -1,0 +1,13 @@
+{
+    "name": "calculator-webapp",
+    "version": "1.0.0",
+    "description": "Ein moderner Taschenrechner",
+    "main": "app.py",
+    "scripts": {
+        "start": "python app.py",
+        "dev": "python app.py"
+    },
+    "keywords": ["calculator", "webapp", "flask", "python"],
+    "author": "Marlon Heil",
+    "license": "MIT"
+}
