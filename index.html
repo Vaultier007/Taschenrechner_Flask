@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taschenrechner</title>
+    <title>Taschenrechner Von Marlon</title>
     <style>
         * {
             margin: 0;
@@ -100,6 +100,17 @@
             background: #26a69a;
         }
         
+        .btn.stolz {
+            background: #3ac764;
+            color: white;
+            grid-column: span 3;
+            font-size: 0.8rem;
+        }
+        
+        .btn.stolz:hover {
+            background: #035a19;
+        }
+        
         .btn.clear {
             background: #ffa726;
             color: white;
@@ -122,9 +133,46 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
         
-        .error {
-            color: #ff6b6b;
-            background: rgba(255, 107, 107, 0.1);
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup-text {
+            color: white;
+            font-size: 4rem;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: pulse 1s infinite alternate;
+            max-width: 90%;
+        }
+        
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            }
+            to {
+                transform: scale(1.1);
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+            }
         }
         
         @media (max-width: 480px) {
@@ -142,13 +190,20 @@
             .title {
                 font-size: 1.5rem;
             }
+            .popup-text {
+                font-size: 2.5rem;
+            }
         }
     </style>
 </head>
 
 <body>
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-text" id="popupText">Das ist doch Easy eine 10</div>
+    </div>
+
     <div class="calculator">
-        <h1 class="title">Taschenrechner</h1>
+        <h1 class="title">Taschenrechner von Marlon</h1>
         <input type="text" class="display" id="display" readonly>
         <div class="buttons">
             <button class="btn clear" onclick="clearDisplay()">C</button>
@@ -173,10 +228,41 @@
 
             <button class="btn number zero" onclick="appendToDisplay('0')">0</button>
             <button class="btn number" onclick="appendToDisplay('.')">.</button>
+            <button class="btn stolz" onclick="showPopup('Das ist doch Easy eine 10 🔥')">Ich hoffe sie sind stolz Herr Möller</button>
         </div>
     </div>
 
     <script>
+        function showPopup(text, duration = 5000) {
+            const popup = document.getElementById('popupOverlay');
+            const popupText = document.getElementById('popupText');
+
+
+            popupText.textContent = text;
+
+
+            popup.classList.add('show');
+
+
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, duration);
+        }
+
+
+        function showCalculationPopup(result) {
+            const messages = [
+                `Ergebnis: ${result}! 🎯`,
+                `Berechnet: ${result}! ✨`,
+                `Resultat: ${result}! 🔥`,
+                `Lösung: ${result}! 💡`,
+                `Antwort: ${result}! ⚡`
+            ];
+
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            showPopup(randomMessage, 3000);
+        }
+
         let display = document.getElementById('display');
         let currentInput = '';
         let operator = '';
